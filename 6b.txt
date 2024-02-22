@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js" ></script>
+</head>
+<body ng-app="myApp" ng-controller="myCntrl">
+    <h1>To do List</h1>
+    <form ng-submit="addTask()">
+        <label>Task</label>
+        <input type="text" ng-model="newTask"> 
+        <button type="submit">Add Task</button>
+    </form><br/><br/>
+    <table border="1">
+        <tr>
+            <th>Task</th>
+            <th>Action</th>
+        </tr>
+        <tr ng-repeat="task in tasks">
+            <td>{{task}}</td>
+            <td>
+                <button ng-click="editTask($index)">Edit</button>
+                <button ng-click="deleteTask($index)">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <script>
+        var app=angular.module("myApp",[]);
+        app.controller("myCntrl",function($scope)
+        {
+            $scope.tasks=["Photography","Dancing","Painting"];
+            $scope.newTask="";
+
+        $scope.addTask=function()
+        {
+            $scope.tasks.push($scope.newTask);
+            $scope.newTask="";
+        };
+        $scope.editTask=function(index)
+        {
+            var update=prompt("Enter the task to update: ");
+            if(update!==null)
+            {
+                $scope.tasks[index]=update;
+            }
+        };
+        $scope.deleteTask=function(index)
+        {
+            var confirmMsg=confirm("Do you want to delete this task?");
+            if(confirmMsg)
+            {
+                $scope.tasks.splice(index,1);
+            }
+        };
+        });
+    </script>
+</body>
+</html>
